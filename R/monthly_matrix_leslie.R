@@ -1,8 +1,7 @@
 library(comprehenr)
-return_one <- function() {
-  return(1)
-}
+library(tidyverse)
 
+#' @export
 monthly_matrix_leslie <- function(fertility, survival) {
   fertility <- comprehenr::to_vec(for (f in fertility) rep(f / 12, 12))
   survival_probability <- comprehenr::to_vec(for (s in survival) rep(s^(1 / 12), 12))
