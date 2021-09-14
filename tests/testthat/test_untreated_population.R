@@ -1,5 +1,9 @@
 library(comprehenr)
-library(FeralCatEradication)
+setwd("/workdir")
+# library(FeralCatEradication)
+source("R/feral_cat.R")
+source("R/monthly_matrix_leslie.R")
+source("R/untreated_population.R")
 
 describe(" The function est_beta_params", {
   it("Return right answer", {
@@ -90,5 +94,47 @@ describe("The class Monthly_Survival_Fertility", {
     expected_monthly_survival <- c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), 35))
     obtained_monthly_survival <- survival$get_survival()
     expect_equal(expected_monthly_survival, obtained_monthly_survival)
+  })
+})
+
+get_second_comparation <- function(survival_fertility, n_times, p_value = 0.05) {
+  a <- survival_fertility$get_fertility()
+  for (index in seq(1, n_times)) {
+    survival_fertility$get_fertility()
+  }
+  b <- survival_fertility$get_fertility()
+  test_case_2 <- t.test(a, b)
+  return(test_case_2$p.value > p_value)
+}
+
+get_first_comparation <- function(survival_fertility, p_value = 0.05) {
+  a <- survival_fertility$get_fertility()
+  b <- survival_fertility$get_fertility()
+  test_case_1 <- t.test(a, b)
+  return(test_case_1$p.value > p_value)
+}
+
+assess_are_equal <- function(survival, std_fertility, std_survival_probability) {
+  survival$set_standard_desviations(std_fertility, std_survival_probability)
+  is_the_same_distribution <- get_first_comparation(survival)
+  expect_true(is_the_same_distribution)
+}
+
+describe("The class Kathryn_Survival_Fertility", {
+  fertility <- rep(1, 20)
+  survival_probability <- rep(0.46, 20)
+  std_fertility <- rbeta(20, 1, 1)
+  std_survival_probability <- rep(0.1150, 19)
+  it("Compare fertility from distribution on Stochastic_Survival_Fertility", {
+    survival <- Stochastic_Survival_Fertility$new(fertility, survival_probability)
+    assess_are_equal(survival, std_fertility, std_survival_probability)
+    is_the_same_distribution <- get_second_comparation(survival, 200)
+    expect_true(is_the_same_distribution)
+  })
+  it("Verify that fertility change from distribution on kathryn_Survival_Fertility", {
+    kathryn <- kathryn_Survival_Fertility$new(fertility, survival_probability)
+    assess_are_equal(kathryn, std_fertility, std_survival_probability)
+    is_the_same_distribution <- get_second_comparation(kathryn, 200)
+    expect_false(is_the_same_distribution)
   })
 })

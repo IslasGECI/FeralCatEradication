@@ -1,10 +1,14 @@
 library(testthat)
-library(FeralCatEradication)
+# library(FeralCatEradication)
+setwd("/workdir")
+source("R/feral_cat.R")
+source("R/monthly_matrix_leslie.R")
+source("R/untreated_population.R")
 
 
 describe("Get version of the module", {
-  it("The version is 0.1.9", {
-    expected_version <- c("0.1.9")
+  it("The version is 0.2.0", {
+    expected_version <- c("0.2.0")
     obtained_version <- packageVersion("FeralCatEradication")
     version_are_equal <- expected_version == obtained_version
     expect_true(version_are_equal)
@@ -63,7 +67,7 @@ describe("Get the Malthusian parameter from the Leslie Matrix", {
   it("Kathryn example. Maximum age: 7 years; Matrix: 7x7", {
     expected_eigenvalue <- 0.223
     obtained_eigenvalue <- max_r(leslie_matrix_kathryn)
-    expect_equal(expected_eigenvalue, obtained_eigenvalue, tolerance = 1e-3)
+    expect_equal(expected_eigenvalue, obtained_eigenvalue, tolerance = 1e-2)
   })
   it("Gotelli example. Maximum age: 4 years; Diagonal matrix: 4x4", {
     expected_eigenvalue <- 0.7397

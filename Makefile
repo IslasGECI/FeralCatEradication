@@ -6,6 +6,10 @@ reports/figures/simulation.jpg: src/untreated_population.R
 	mkdir --parents $(@D)
 	Rscript src/untreated_population.R
 
+reports/figures/constant_proportional_annual_cull.jpg: src/constant_proportional_annual_cull.R
+	mkdir --parents $(@D)
+	Rscript src/constant_proportional_annual_cull.R
+
 reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
 	Rscript src/presentacion_210820.R
@@ -66,8 +70,8 @@ results: src/FeralCatEradication.R
 setup:
 	R -e "devtools::document()" && \
 	R CMD build . && \
-	R CMD check FeralCatEradication_0.1.9.tar.gz && \
-	R CMD INSTALL FeralCatEradication_0.1.9.tar.gz
+	R CMD check FeralCatEradication_0.2.0.tar.gz && \
+	R CMD INSTALL FeralCatEradication_0.2.0.tar.gz
 	
 tests:
 	R -e "testthat::test_dir('tests/testthat/', report = 'summary', stop_on_failure = TRUE)"
