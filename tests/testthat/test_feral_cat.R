@@ -7,8 +7,8 @@ source("R/untreated_population.R")
 
 
 describe("Get version of the module", {
-  it("The version is 0.2.0", {
-    expected_version <- c("0.2.0")
+  it("The version is 0.2.1", {
+    expected_version <- c("0.2.1")
     obtained_version <- packageVersion("FeralCatEradication")
     version_are_equal <- expected_version == obtained_version
     expect_true(version_are_equal)
