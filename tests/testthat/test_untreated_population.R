@@ -69,7 +69,11 @@ describe("The class Stochastic_Survival_Fertility", {
 })
 
 get_fertlity_by_n_months <- function(n_months) {
-  return (c(rep((0.745 / 3) / 12, 12), rep(2.52 / 12, n_months), rep(1.98 / 12, 12)))
+  return(c(rep((0.745 / 3) / 12, 12), rep(2.52 / 12, n_months), rep(1.98 / 12, 12)))
+}
+
+get_survival_by_n_months <- function(n_months) {
+  return(c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), n_months)))
 }
 
 describe("The class Monthly_Survival_Fertility", {
@@ -82,7 +86,7 @@ describe("The class Monthly_Survival_Fertility", {
     expect_equal(expected_monthly_fertility, obtained_monthly_fertility)
   })
   it("Survival for tree classes of age", {
-    expected_monthly_survival <- c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), 23))
+    expected_monthly_survival <- get_survival_by_n_months(23)
     obtained_monthly_survival <- survival$get_survival()
     expect_equal(expected_monthly_survival, obtained_monthly_survival)
   })
@@ -95,7 +99,7 @@ describe("The class Monthly_Survival_Fertility", {
     expect_equal(expected_monthly_fertility, obtained_monthly_fertility)
   })
   it("Survival for four classes of age", {
-    expected_monthly_survival <- c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), 35))
+    expected_monthly_survival <- get_survival_by_n_months(35)
     obtained_monthly_survival <- survival$get_survival()
     expect_equal(expected_monthly_survival, obtained_monthly_survival)
   })
