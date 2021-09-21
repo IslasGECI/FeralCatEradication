@@ -1,9 +1,5 @@
 library(comprehenr)
-setwd("/workdir")
-# library(FeralCatEradication)
-source("R/feral_cat.R")
-source("R/monthly_matrix_leslie.R")
-source("R/untreated_population.R")
+
 
 describe(" The function est_beta_params", {
   it("Return right answer", {

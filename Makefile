@@ -97,4 +97,4 @@ setup:
 	R CMD INSTALL FeralCatEradication_0.2.1.tar.gz
 	
 tests:
-	R -e "testthat::test_dir('tests/testthat/', report = 'summary', stop_on_failure = TRUE)"
+	R -e "devtools::test()"

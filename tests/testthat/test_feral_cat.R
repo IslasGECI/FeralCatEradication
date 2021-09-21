@@ -1,9 +1,4 @@
 library(testthat)
-# library(FeralCatEradication)
-setwd("/workdir")
-source("R/feral_cat.R")
-source("R/monthly_matrix_leslie.R")
-source("R/untreated_population.R")
 
 
 describe("Get version of the module", {
