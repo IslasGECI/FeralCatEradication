@@ -1,9 +1,5 @@
 library(comprehenr)
-setwd("/workdir")
-# library(FeralCatEradication)
-source("R/feral_cat.R")
-source("R/monthly_matrix_leslie.R")
-source("R/untreated_population.R")
+
 
 describe(" The function est_beta_params", {
   it("Return right answer", {
@@ -68,17 +64,25 @@ describe("The class Stochastic_Survival_Fertility", {
   })
 })
 
+get_fertlity_by_n_months <- function(n_months) {
+  return(c(rep((0.745 / 3) / 12, 12), rep(2.52 / 12, n_months), rep(1.98 / 12, 12)))
+}
+
+get_survival_by_n_months <- function(n_months) {
+  return(c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), n_months)))
+}
+
 describe("The class Monthly_Survival_Fertility", {
   fertility <- c((0.745 / 3), 2.52, 1.98)
   survival_probability <- c(0.46, 0.7)
   survival <- Monthly_Survival_Fertility$new(fertility, survival_probability)
   it("Fertility for tree classes of age", {
-    expected_monthly_fertility <- c(rep((0.745 / 3) / 12, 12), rep(2.52 / 12, 12), rep(1.98 / 12, 12))
+    expected_monthly_fertility <- get_fertlity_by_n_months(12)
     obtained_monthly_fertility <- survival$get_fertility()
     expect_equal(expected_monthly_fertility, obtained_monthly_fertility)
   })
   it("Survival for tree classes of age", {
-    expected_monthly_survival <- c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), 23))
+    expected_monthly_survival <- get_survival_by_n_months(23)
     obtained_monthly_survival <- survival$get_survival()
     expect_equal(expected_monthly_survival, obtained_monthly_survival)
   })
@@ -86,12 +90,12 @@ describe("The class Monthly_Survival_Fertility", {
   survival_probability <- c(0.46, 0.7, 0.7)
   survival <- Monthly_Survival_Fertility$new(fertility, survival_probability)
   it("Fertility for four classes of age", {
-    expected_monthly_fertility <- c(rep((0.745 / 3) / 12, 12), rep(2.52 / 12, 24), rep(1.98 / 12, 12))
+    expected_monthly_fertility <- get_fertlity_by_n_months(24)
     obtained_monthly_fertility <- survival$get_fertility()
     expect_equal(expected_monthly_fertility, obtained_monthly_fertility)
   })
   it("Survival for four classes of age", {
-    expected_monthly_survival <- c(rep((0.46)^(1 / 12), 12), rep(0.7^(1 / 12), 35))
+    expected_monthly_survival <- get_survival_by_n_months(35)
     obtained_monthly_survival <- survival$get_survival()
     expect_equal(expected_monthly_survival, obtained_monthly_survival)
   })
