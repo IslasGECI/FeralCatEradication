@@ -332,3 +332,20 @@ Annualy_Harvest <- R6::R6Class("Annualy_Harvest",
   ),
   private = list()
 )
+
+#' @export
+Many_Harvest <- R6::R6Class("Many_Harvest",
+  public = list(
+    proportion = NULL,
+    initialize = function(proportion) {
+      self$proportion <- proportion
+    },
+    get_harvest = function() {
+      private$year <- private$year + 1
+      return(self$proportion[private$year])
+    }
+  ),
+  private = list(
+    year = 0
+  )
+)
