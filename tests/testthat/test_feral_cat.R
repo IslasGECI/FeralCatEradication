@@ -256,3 +256,13 @@ describe("Annualy_Harvest", {
     expect_equal(expected_harvest, harvest$get_harvest())
   })
 })
+
+describe("Many_Harvest", {
+  it("Has the correct proportion", {
+    expected_harvests <- c(rep(0.35, 3), rep(0.65, 7))
+    harvest <- Many_Harvest$new(expected_harvest)
+    for (expected_harvest in expected_harvests) {
+      expect_equal(expected_harvest, harvest$get_harvest())
+    }
+  })
+})
