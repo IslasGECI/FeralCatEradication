@@ -48,7 +48,8 @@ test_that("Population anualy with carring capacity from 2020 to 2030", {
 })
 
 population_with_cc <- Population$new(survival)
-simulator <- Runner_Population_With_CC_harvest$new(population_with_cc, coefficients, 0.1)
+harv.prop <- Annualy_Harvest$new(0.1)
+simulator <- Runner_Population_With_CC_harvest$new(population_with_cc, coefficients, harv.prop)
 simulator$run_generations(interval_time, initial_population = initial_population)
 
 test_that("Population anualy with carring capacity and harvest from 2020 to 2030", {
