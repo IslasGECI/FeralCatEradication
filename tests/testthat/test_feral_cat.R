@@ -248,3 +248,11 @@ describe("The class Monthly_Interval_Time", {
     expect_equal(expected_sequence_years, obtained_sequence_years)
   })
 })
+
+describe("Annualy_Harvest", {
+  it("Has the correct proportion", {
+    expected_harvest <- 0.35
+    harvest <- Annualy_Harvest$new(expected_harvest)
+    expect_equal(expected_harvest, harvest$get_harvest())
+  })
+})
