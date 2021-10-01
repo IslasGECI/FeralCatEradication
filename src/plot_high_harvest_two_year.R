@@ -1,5 +1,5 @@
-harv.prop.init <- seq(0.5, 0.9, 0.05)
-harv.prop.maint <- seq(0.1, 0.5, 0.05)
+harv.prop.init <- seq(0.5, 0.9, 0.10)
+harv.prop.maint <- seq(0.1, 0.5, 0.10)
 # harvest rate 200-280
 harv.prop.consist <- seq(0.2, 0.99, 0.05) # sequence harvest/culling quotas, e.g remove 0.5-.99 porportion of founding pop
 
@@ -51,6 +51,10 @@ for (m in 1:length(harv.prop.maint)) {
       n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
     } # end e loop (stochastic iterations)
 
+    min.ppop.vec <- apply(n_sums_mat, MARGIN=1, min, na.rm=T)
+    pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm=T)
+    pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs=0.025, na.rm=T) 
+    pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs=0.975, na.rm=T)
     print("##############################")
     print(paste("init harvest proportion = ", harv.prop.init[n], sep = ""))
     print("##############################")
@@ -60,3 +64,6 @@ for (m in 1:length(harv.prop.maint)) {
   print(paste("maint harvest proportion = ", harv.prop.maint[m], sep = ""))
   print("##############################")
 } # end m loop (maintenance harvest rate)
+twophase.up <- data.frame(pmin.up.mat)
+colnames(twophase.up) <- harv.prop.maint
+rownames(twophase.up) <- harv.prop.init
