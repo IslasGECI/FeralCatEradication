@@ -51,10 +51,10 @@ for (m in 1:length(harv.prop.maint)) {
       n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
     } # end e loop (stochastic iterations)
 
-    min.ppop.vec <- apply(n_sums_mat, MARGIN=1, min, na.rm=T)
-    pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm=T)
-    pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs=0.025, na.rm=T) 
-    pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs=0.975, na.rm=T)
+    min.ppop.vec <- apply(n_sums_mat, MARGIN = 1, min, na.rm = T)
+    pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm = T)
+    pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs = 0.025, na.rm = T)
+    pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs = 0.975, na.rm = T)
     print("##############################")
     print(paste("init harvest proportion = ", harv.prop.init[n], sep = ""))
     print("##############################")
