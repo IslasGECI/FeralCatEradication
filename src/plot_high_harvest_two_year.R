@@ -64,7 +64,7 @@ for (m in 1:length(harv.prop.maint)) {
   print(paste("maint harvest proportion = ", harv.prop.maint[m], sep = ""))
   print("##############################")
 } # end m loop (maintenance harvest rate)
-twophase.up <- data.frame(pmin.up.mat)
+twophase.up <- data.frame(pmin.med.mat)
 colnames(twophase.up) <- harv.prop.maint
 rownames(twophase.up) <- harv.prop.init
 
