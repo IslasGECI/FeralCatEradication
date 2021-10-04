@@ -72,7 +72,7 @@ datos <- expand_grid(x = harv.prop.init, y = harv.prop.maint)
 nx <- length(harv.prop.init)
 ny <- length(harv.prop.maint)
 datos$z <- to_vec(for (x in seq(1, nx)) for (y in seq(1, ny)) twophase.up[x, y])
-write_csv("reports/tables/final_population_remaining_combinations_culling_scenarios.csv")
+write_csv(datos, "reports/tables/final_population_remaining_combinations_culling_scenarios.csv")
 breaks <- c(seq(0, 0.3, 0.01), 0.5)
 ggplot(datos, aes(x, y, z = z)) +
   geom_contour_filled(aes(), breaks = breaks) +
