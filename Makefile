@@ -35,6 +35,11 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
 	Rscript src/presentacion_210820.R
 
+reports/tables/final_population_remaining_combinations_culling_scenarios.csv: plot_high_harvest_two_year.R
+	mkdir --parents $(@D)
+	Rscript plot_high_harvest_two_year.R
+
+
 .PHONY: \
 		check \
 		clean \
