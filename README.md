@@ -18,3 +18,9 @@ Frédérik Saltré.
 - Requires library _Plotly_
 - Run `matrixOperators.r` before `FeralCatEradication.R`
 - Run `FeralCatEradication.R` L9-136, before `Supplementary.R`
+
+
+docker build . --tag feral_cat
+docker run --name feral_cat feral_cat make reports/predicting_targets_and_costs.pdf
+docker cp feral_cat:/workdir/reports/predicting_targets_and_costs.pdf .
+xdg-open reports/predicting_targets_and_costs.pdf
