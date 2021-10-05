@@ -42,7 +42,7 @@ reports/tables/final_population_remaining_combinations_culling_scenarios.csv: sr
 reports/tables/culling_contour_plot.csv: AQUI_VAN_LOS_DATOS.CSV src/plot_culling_contours.py
 	mkdir --parents $(@D)
 	src/plot_culling_contours.py \
-		--input $<
+		--input $< \
 		--output $@
 
 .PHONY: \
