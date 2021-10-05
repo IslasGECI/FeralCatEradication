@@ -36,9 +36,9 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
 	Rscript src/presentacion_210820.R
 
-reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/plot_high_harvest_two_year.R
+reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/calculate_high_harvest_two_year.R
 	mkdir --parents $(@D)
-	Rscript src/plot_high_harvest_two_year.R
+	Rscript src/calculate_high_harvest_two_year.R
 
 reports/figures/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
