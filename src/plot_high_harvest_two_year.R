@@ -1,5 +1,5 @@
-harv.prop.init <- seq(0.5, 0.99, 0.05)
-harv.prop.maint <- seq(0.1, 0.5, 0.05)
+harv.prop.init <- seq(0.5, 0.99, 0.10)
+harv.prop.maint <- seq(0.1, 0.5, 0.10)
 # harvest rate 200-280
 harv.prop.consist <- seq(0.2, 0.99, 0.05) # sequence harvest/culling quotas, e.g remove 0.5-.99 porportion of founding pop
 
