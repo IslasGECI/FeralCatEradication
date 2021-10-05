@@ -16,7 +16,8 @@ reports/predicting_targets_and_costs.pdf: reports/predicting_targets_and_costs.t
 	reports/figures/reduction_factor.jpg \
 	reports/figures/simulation.jpg \
 	reports/figures/constant_proportional_annual_cull.jpg \
-	reports/figures/monthly_time_serie_individuals.jpg
+	reports/figures/monthly_time_serie_individuals.jpg \
+	reports/tables/culling_contour_plot.png
 	$(renderLatexBibtexAndPythontex)
 
 reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
@@ -39,7 +40,7 @@ reports/tables/final_population_remaining_combinations_culling_scenarios.csv: sr
 	mkdir --parents $(@D)
 	Rscript src/plot_high_harvest_two_year.R
 
-reports/tables/culling_contour_plot.csv: AQUI_VAN_LOS_DATOS.CSV src/plot_culling_contours.py
+reports/tables/culling_contour_plot.png: reports/figures/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
 	src/plot_culling_contours.py \
 		--input $< \
