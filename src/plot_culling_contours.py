@@ -23,7 +23,7 @@ x_grid = x_grid.T
 y_grid = y_grid.T
 
 fig, ax = geci_plot()
-plt.contourf(x_grid, y_grid, z_grid, np.arange(0, .33, .03), alpha=0.8, extend='both')
+plt.contourf(x_grid, y_grid, z_grid, np.arange(0, .33, .01), alpha=0.8, extend='both')
 CS = ax.contour(x_grid, y_grid, z_grid, np.arange(0, .33, .03), colors='black')
 ax.clabel(CS, CS.levels, inline=True, fontsize=10)
 plt.colorbar()
