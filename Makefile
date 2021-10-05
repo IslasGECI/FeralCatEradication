@@ -40,7 +40,7 @@ reports/tables/final_population_remaining_combinations_culling_scenarios.csv: sr
 	mkdir --parents $(@D)
 	Rscript src/plot_high_harvest_two_year.R
 
-reports/tables/culling_contour_plot.png: reports/figures/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
+reports/tables/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
 	src/plot_culling_contours.py \
 		--input $< \
