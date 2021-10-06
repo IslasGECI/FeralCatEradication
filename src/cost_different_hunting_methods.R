@@ -1,3 +1,4 @@
+source("src/parameters_of_fertility_and_survival.R")
 #######################################################################################################################################################################################################
 ######################################################################################### COSTS #################################################################################################
 ########################################################################################################################################################################################################
@@ -72,42 +73,9 @@ cost.total.bait <- planecost + baitadminfee + (only.bait.unit * baitnum) # cost 
 
 pbait.killr <- 14 / 525.74 # 14 cats killed by 525.74 baits
 
-
-
 ###########################################################################################
+source("src/fit_model_efficiency.R")
 
-###########################################################################################
-## Type III functional response (reduction in capture efficiency with decreasing density)
-max.eff <- 1 # max efficiency
-min.eff <- 0 # min efficiency
-max.pN <- 1 # max population proportion
-min.pN <- 0 # min population proportion
-infl.eff <- 0.5
-
-pN.vec <- c(min.pN, 0.2, 0.4, 0.5, 0.7, 0.8, max.pN)
-eff.vec <- c(min.eff, 0.05, 0.3, infl.eff, 0.85, 0.95, max.eff)
-plot(pN.vec, eff.vec, type = "b", pch = 19)
-eff.dat <- data.frame(pN.vec, eff.vec)
-colnames(eff.dat) <- c("pN", "eff")
-
-# a/(1 + b*e^(-cx)) (logistic)
-param.init <- c(1, 85, 8.9)
-fit.eff <- nls(eff ~ a / (1 + (b * exp(-c * pN))),
-  data = eff.dat,
-  algorithm = "port",
-  start = c(a = param.init[1], b = param.init[2], c = param.init[3]),
-  trace = TRUE,
-  nls.control(maxiter = 1000, tol = 1e-05, minFactor = 1 / 1024)
-)
-fit.eff.summ <- summary(fit.eff)
-plot(pN.vec, eff.vec, pch = 19, xlab = "pN", ylab = "efficiency")
-pN.vec.cont <- seq(0, 1, 0.01)
-pred.eff.fx <- coef(fit.eff)[1] / (1 + (coef(fit.eff)[2] * exp(-coef(fit.eff)[3] * pN.vec.cont)))
-lines(pN.vec.cont, pred.eff.fx, lty = 2, lwd = 3, col = "red")
-
-a.eff <- coef(fit.eff)[1]
-b.eff <- coef(fit.eff)[2]
-c.eff <- coef(fit.eff)[3]
 
 ###########################################################################################
 
@@ -236,14 +204,6 @@ for (m in 1:length(harv.prop.maint)) {
     colnames(totcost.med) <- harv.prop.maint
     rownames(totcost.med) <- harv.prop.init
 
-    totcost.lo[n, m] <- quantile(totcost.vec, probs = 0.025, na.rm = T)
-    colnames(totcost.lo) <- harv.prop.maint
-    rownames(totcost.lo) <- harv.prop.init
-
-    totcost.up[n, m] <- quantile(totcost.vec, probs = 0.975, na.rm = T)
-    colnames(totcost.up) <- harv.prop.maint
-    rownames(totcost.up) <- harv.prop.init
-
     print("##############################")
     print(paste("init harvest proportion = ", harv.prop.init[n], sep = ""))
     print("##############################")
@@ -253,43 +213,3 @@ for (m in 1:length(harv.prop.maint)) {
   print(paste("maint harvest proportion = ", harv.prop.maint[m], sep = ""))
   print("##############################")
 } # end m loop (maintenance harvest rate)
-
-## plot 3D surfaces
-f1 <- list(
-  family = "Avenir Light",
-  size = 26,
-  color = "black"
-)
-f2 <- list(
-  family = "Avenir Light",
-  size = 18,
-  color = "black"
-)
-f3 <- list(
-  family = "Avenir Light",
-  size = 16,
-  color = "black"
-)
-
-# total cost (median)
-par(mar = c(5, 5, 2, 8))
-costcontmed3d <- plot_ly(z = ~totcost.med, autocontour = T, type = "contour", line = list(smoothing = 0.90), contours = list(showlabels = TRUE, labelfont = list(
-  size = 18, family = "Avenir Light", face = "bold", color = "white"
-))) %>%
-  colorbar(title = "tot $", titlefont = f2, tickfont = f2) %>%
-  layout(
-    xaxis = list(title = "maintenance cull", titlefont = f1, tickfont = f2, ticketmode = "array", ticktext = as.character(seq(0.1, 0.5, 0.1)), tickvals = seq(0, 8, 2)),
-    yaxis = list(title = "initial cull", titlefont = f1, tickfont = f2, ticketmode = "array", ticktext = as.character(seq(0.5, 0.9, 0.1)), tickvals = seq(0, 8, 2))
-  )
-costcontmed3d
-
-cost3d <- plot_ly(showscale = FALSE) %>%
-  add_surface(z = ~totcost.med) %>%
-  add_surface(z = ~totcost.lo, opacity = 0.55) %>%
-  add_surface(z = ~totcost.up, opacity = 0.55) %>%
-  layout(scene = list(
-    xaxis = list(title = "maintenance cull", titlefont = f1, tickfont = f2, ticketmode = "array", ticktext = as.character(seq(0.1, 0.5, 0.1)), tickvals = seq(0, 8, 2)),
-    yaxis = list(title = "initial cull", titlefont = f1, tickfont = f2, ticketmode = "array", ticktext = as.character(seq(0.5, 0.9, 0.1)), tickvals = seq(0, 8, 2)),
-    zaxis = list(title = "tot $", tickfont = f3, titlefont = f1)
-  ))
-cost3d
