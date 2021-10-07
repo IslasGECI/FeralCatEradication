@@ -105,13 +105,7 @@ for (m in 1:length(harv.prop.maint)) {
       if (e %% itdiv == 0) print(e)
     } # end e loop (stochastic iterations)
 
-    min.pop.vec <- apply(n.sums.mat, MARGIN = 1, min, na.rm = T)
     min.ppop.vec <- apply(p.sums.mat, MARGIN = 1, min, na.rm = T)
-
-    # median, lower & upper minimum population sizes
-    minn.med.mat[n, m] <- median(min.pop.vec, na.rm = T)
-    minn.lo.mat[n, m] <- quantile(min.pop.vec, probs = 0.025, na.rm = T)
-    minn.up.mat[n, m] <- quantile(min.pop.vec, probs = 0.975, na.rm = T)
 
     # median, lower & upper minimum proportional population sizes
     pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm = T)
