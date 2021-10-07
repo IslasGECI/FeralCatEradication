@@ -312,7 +312,8 @@ Runner_Population_With_CC_harvest <- R6::R6Class("Runner_Population_With_CC_harv
       popmat <- matrix_leslie(self$population$survival$get_fertility(), modified_survival_probability)
       population_next_year <- popmat %*% n_mat
       ssd <- FeralCatEradication::stable_stage_dist(popmat)
-      population_next_year <- population_next_year - round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
+      hunted_cats <- round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
+      population_next_year <- population_next_year - hunted_cats
       population_next_year[which(population_next_year < 0)] <- 0
       return(population_next_year)
     }
