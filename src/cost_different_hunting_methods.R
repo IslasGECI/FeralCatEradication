@@ -27,60 +27,26 @@ for (m in 1:length(harv.prop.maint)) {
   for (n in 1:length(harv.prop.init)) {
 
     # storage
-    init.k.sums.mat <- k.sums.mat <- n.sums.mat <- p.sums.mat <- totalcost.mat <- matrix(data = NA, nrow = iter, ncol = (t + 1))
+    harvest <- c(rep(harv.prop.init[n], 2), rep(harv.prop.maint[m], 9))
 
-    for (e in 1:iter) {
-      popmat <- popmat.orig
+    for (simulation in seq(1, iter)) {
+      survival <- Stochastic_Survival_Fertility$new(fertility, survival_probability)
+      survival$set_standard_desviations(std_fertility, std_survival_probability)
+      population <- Population$new(survival)
+      two_harvest <- Many_Harvest$new(harvest)
+      simulator2 <- Runner_Population_With_CC_harvest$new(population, coefficients, two_harvest)
+      simulator2$run_generations(interval_time, initial_population = initial_population)
 
-      init.k.mat <- n.mat <- k.mat <- matrix(0, nrow = age.max, ncol = (t + 1))
-      n.mat[, 1] <- init.vec
-
-      for (i in 1:t) {
-        # stochastic survival values
-        s.alpha <- estBetaParams(s.vec, s.sd.vec^2)$alpha
-        s.beta <- estBetaParams(s.vec, s.sd.vec^2)$beta
-        s.stoch <- rbeta(length(s.alpha), s.alpha, s.beta)
-
-        # stochastic fertilty sampler (gaussian)
-        fert.stch <- rnorm(length(popmat[, 1]), popmat[1, ], m.sd.vec)
-        fert.stoch <- ifelse(fert.stch < 0, 0, fert.stch)
-
-        totN.i <- sum(n.mat[, i])
-        pred.red <- a.lp / (1 + (totN.i / b.lp)^c.lp)
-
-        popmat[1, ] <- fert.stoch # add new stochastically resampled fertilities
-        diag(popmat[2:age.max, ]) <- s.stoch * pred.red
-        # popmat[age.max,age.max] <- s.stoch[age.max]*pred.red
-
-        n.mat[, i + 1] <- popmat %*% n.mat[, i]
-
-        ## harvest things here
-        if (i < 3) {
-          k.mat[, i + 1] <- round(stable.stage.dist(popmat) * round(sum(n.mat[, i + 1]) * harv.prop.init[n], 0), 0)
-          n.mat[, i + 1] <- n.mat[, i + 1] - k.mat[, i + 1]
-          init.k.mat[, i + 1] <- n.mat[, i + 1]
-        } else {
-          k.mat[, i + 1] <- round(stable.stage.dist(popmat) * round(sum(n.mat[, i + 1]) * harv.prop.maint[m], 0), 0)
-          n.mat[, i + 1] <- n.mat[, i + 1] - k.mat[, i + 1]
-        }
-
-        if (length(which(n.mat[, i + 1] < 0)) > 0) {
-          n.mat[which(n.mat[, i + 1] < 0), i + 1] <- 0
-        }
-        if (length(which(k.mat[, i + 1] < 0)) > 0) {
-          k.mat[which(k.mat[, i + 1] < 0), i + 1] <- 0
-        }
-      } # end i loop
 
       init.k.sums.mat[e, ] <- as.vector(colSums(init.k.mat))
-      k.sums.mat[e, ] <- as.vector(colSums(k.mat))
-      n.sums.mat[e, ] <- as.vector(colSums(n.mat))
-      p.sums.mat[e, ] <- n.sums.mat[e, ] / pop.found
+      k.sums.mat[e, ] <- as.vector(colSums(simulator2$k_mat))
+      n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
 
       # cost of cats killed here
-      eff.vec.iter <- a.eff / (1 + (b.eff * exp(-c.eff * p.sums.mat[e, ]))) # efficiency this iteration
+      eff.vec.iter <- a.eff / (1 + (b.eff * exp(-c.eff * n_sums_mat[simulation, ]))) # efficiency this iteration
 
       # calculate numbers killed per year using baiting and trapping first two years
+      dispatched_cats_base <-
       bait.kill.base <- round(init.k.sums.mat[e, ] * (eff.vec.iter * pbait.killr), 0)
       trap.kill.base <- round(k.sums.mat[e, ] * (eff.vec.iter * ptrap.killr), 0)
       bt.kill.base <- trap.kill.base + bait.kill.base
