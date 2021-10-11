@@ -42,7 +42,7 @@ for (m in 1:length(harv.prop.maint)) {
       simulator2$run_generations(interval_time, initial_population = initial_population)
 
 
-      k.sums.mat[e, ] <- as.vector(colSums(simulator2$k_mat))
+      k.sums.mat[simulation, ] <- as.vector(colSums(simulator2$k_mat))
       n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
 
       # cost of cats killed here
@@ -54,7 +54,7 @@ for (m in 1:length(harv.prop.maint)) {
       bait.kill.base <- round(dispatched_cats_base * (eff.vec.iter * pbait.killr), 0)
       trap.kill.base <- round(dispatched_cats_base * (eff.vec.iter * ptrap.killr), 0)
       bt.kill.base <- trap.kill.base + bait.kill.base
-      shortfall <- k.sums.mat[e, ] - bt.kill.base # how many cats not being killed by these methods?
+      shortfall <- k.sums.mat[simulation, ] - bt.kill.base # how many cats not being killed by these methods?
 
       # base cost
       base.cost <- (cost.total.bait * 2) + (KI.trap.num * runif(1, min = trap.unit[1], max = trap.unit[2])) # at initial roll-out numbers
@@ -64,22 +64,16 @@ for (m in 1:length(harv.prop.maint)) {
       makeup_felixer <- felixer.unit * (shortfall / (pfelixer.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
       makeup_traps <- (runif(1, min = trap.unit[1], max = trap.unit[2])) * (shortfall / (ptrap.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
 
-      totalcost.hunt[e, ] <- base.cost + makeup_hunt
-      totalcost.felixer[e, ] <- base.cost + makeup_felixer
-      totalcost.traps[e, ] <- base.cost + makeup_traps
+      totalcost.hunt[simulation, ] <- base.cost + makeup_hunt
+      totalcost.felixer[simulation, ] <- base.cost + makeup_felixer
+      totalcost.traps[simulation, ] <- base.cost + makeup_traps
 
-      if (e %% itdiv == 0) print(e)
     } # end e loop (stochastic iterations)
 
     min.ppop.vec <- apply(p.sums.mat, MARGIN = 1, min, na.rm = T)
-
-    # median, lower & upper minimum proportional population sizes
     pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm = T)
     pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs = 0.025, na.rm = T)
     pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs = 0.975, na.rm = T)
-
-    # quasi-extinction
-    qext.mat[n, m] <- (sum(ifelse(round(min.pop.vec, 0) < q.ext, 1, 0)) / iter)
 
     ## costs
     totcost.vec <- apply(totalcost.mat, MARGIN = 1, sum, na.rm = T)
