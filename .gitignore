@@ -2,3 +2,4 @@
 FeralCatEradication_*
 FeralCatEradication.Rcheck
 NAMESPACE
+tests/testthat/_snaps
