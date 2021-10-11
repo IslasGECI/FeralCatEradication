@@ -70,13 +70,13 @@ for (m in 1:length(harv.prop.maint)) {
 
     } # end e loop (stochastic iterations)
 
-    min.ppop.vec <- apply(p.sums.mat, MARGIN = 1, min, na.rm = T)
+    min.ppop.vec <- apply(n_sums_mat, MARGIN = 1, min, na.rm = T)
     pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm = T)
     pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs = 0.025, na.rm = T)
     pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs = 0.975, na.rm = T)
 
     ## costs
-    totcost.vec <- apply(totalcost.mat, MARGIN = 1, sum, na.rm = T)
+    totcost.vec <- apply(totalcost.hunt, MARGIN = 1, sum, na.rm = T)
     totcost.med[n, m] <- median(totcost.vec, na.rm = T)
     colnames(totcost.med) <- harv.prop.maint
     rownames(totcost.med) <- harv.prop.init
