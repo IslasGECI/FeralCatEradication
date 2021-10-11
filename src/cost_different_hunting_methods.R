@@ -22,7 +22,11 @@ q.ext <- 20
 
 # storage
 qext.mat <- minn.med.mat <- minn.lo.mat <- minn.up.mat <- pmin.med.mat <- pmin.lo.mat <- pmin.up.mat <- totcost.med <- totcost.lo <- totcost.up <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
-
+n_sums_mat <- matrix(data = 0, nrow = iter, ncol = number_year)
+totalcost.hunt <- matrix(data = 0, nrow = iter, ncol = number_year)
+totalcost.felixer <- matrix(data = 0, nrow = iter, ncol = number_year)
+totalcost.traps <- matrix(data = 0, nrow = iter, ncol = number_year)
+k.sums.mat <- matrix(data = 0, nrow = iter, ncol = number_year)
 for (m in 1:length(harv.prop.maint)) {
   for (n in 1:length(harv.prop.init)) {
 
@@ -56,11 +60,13 @@ for (m in 1:length(harv.prop.maint)) {
       base.cost <- (cost.total.bait * 2) + (KI.trap.num * runif(1, min = trap.unit[1], max = trap.unit[2])) # at initial roll-out numbers
 
       # make up shortfall
-      makeup.iter_hunt <- shoot.ph * (shortfall / (cats.pph * eff.vec.iter)) # how many person-hours required to make up shortfall?
-      makeup.iter_felixer <- felixer.unit * (shortfall / (pfelixer.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
-      makeup.iter_traps <- (runif(1, min = trap.unit[1], max = trap.unit[2])) * (shortfall / (ptrap.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
+      makeup_hunt <- shoot.ph * (shortfall / (cats.pph * eff.vec.iter)) # how many person-hours required to make up shortfall?
+      makeup_felixer <- felixer.unit * (shortfall / (pfelixer.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
+      makeup_traps <- (runif(1, min = trap.unit[1], max = trap.unit[2])) * (shortfall / (ptrap.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
 
-      totalcost.mat[e, ] <- base.cost + makeup.iter
+      totalcost.hunt[e, ] <- base.cost + makeup_hunt
+      totalcost.felixer[e, ] <- base.cost + makeup_felixer
+      totalcost.traps[e, ] <- base.cost + makeup_traps
 
       if (e %% itdiv == 0) print(e)
     } # end e loop (stochastic iterations)
