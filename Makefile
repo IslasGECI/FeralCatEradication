@@ -16,7 +16,8 @@ reports/predicting_targets_and_costs.pdf: reports/predicting_targets_and_costs.t
 	reports/figures/reduction_factor.jpg \
 	reports/figures/simulation.jpg \
 	reports/figures/constant_proportional_annual_cull.jpg \
-	reports/figures/monthly_time_serie_individuals.jpg
+	reports/figures/monthly_time_serie_individuals.jpg \
+	reports/figures/culling_contour_plot.png
 	$(renderLatexBibtexAndPythontex)
 
 reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
@@ -35,10 +36,15 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
 	Rscript src/presentacion_210820.R
 
-reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/plot_high_harvest_two_year.R
+reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/calculate_high_harvest_two_year.R
 	mkdir --parents $(@D)
-	Rscript src/plot_high_harvest_two_year.R
+	Rscript src/calculate_high_harvest_two_year.R
 
+reports/figures/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
+	mkdir --parents $(@D)
+	src/plot_culling_contours.py \
+		--input $< \
+		--output $@
 
 .PHONY: \
 		check \

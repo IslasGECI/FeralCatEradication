@@ -1,5 +1,5 @@
-harv.prop.init <- seq(0.5, 0.99, 0.05)
-harv.prop.maint <- seq(0.1, 0.5, 0.05)
+harv.prop.init <- seq(0.5, 0.99, 0.10)
+harv.prop.maint <- seq(0.1, 0.5, 0.10)
 # harvest rate 200-280
 harv.prop.consist <- seq(0.2, 0.99, 0.05) # sequence harvest/culling quotas, e.g remove 0.5-.99 porportion of founding pop
 
@@ -64,7 +64,7 @@ for (m in 1:length(harv.prop.maint)) {
   print(paste("maint harvest proportion = ", harv.prop.maint[m], sep = ""))
   print("##############################")
 } # end m loop (maintenance harvest rate)
-twophase.up <- data.frame(pmin.up.mat)
+twophase.up <- data.frame(pmin.med.mat)
 colnames(twophase.up) <- harv.prop.maint
 rownames(twophase.up) <- harv.prop.init
 
@@ -72,9 +72,4 @@ datos <- expand_grid(x = harv.prop.init, y = harv.prop.maint)
 nx <- length(harv.prop.init)
 ny <- length(harv.prop.maint)
 datos$z <- to_vec(for (x in seq(1, nx)) for (y in seq(1, ny)) twophase.up[x, y])
-wirte_csv("reports/tables/final_population_remaining_combinations_culling_scenarios.csv")
-breaks <- c(seq(0, 0.3, 0.01), 0.5)
-ggplot(datos, aes(x, y, z = z)) +
-  geom_contour_filled(aes(), breaks = breaks) +
-  labs(x = "Initial cull", y = "Maintenance cull")
-ggsave("final_population_remaining_combinations_culling_scenarios.png")
+write_csv(datos, "reports/tables/final_population_remaining_combinations_culling_scenarios.csv")
