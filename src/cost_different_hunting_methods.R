@@ -46,7 +46,7 @@ for (m in 1:length(harv.prop.maint)) {
 
       # calculate numbers killed per year using baiting and trapping first two years
       dispatched_cats_base <- as.vector(colSums(simulator2$k_mat[, 2:3]))
-      dispatched_cats_base <- c(0, dispatched_cats_base, rep(0,8))
+      dispatched_cats_base <- c(0, dispatched_cats_base, rep(0, 8))
       bait.kill.base <- round(dispatched_cats_base * (eff.vec.iter * pbait.killr), 0)
       trap.kill.base <- round(dispatched_cats_base * (eff.vec.iter * ptrap.killr), 0)
       bt.kill.base <- trap.kill.base + bait.kill.base
