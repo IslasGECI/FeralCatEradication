@@ -56,15 +56,9 @@ for (m in 1:length(harv.prop.maint)) {
       base.cost <- (cost.total.bait * 2) + (KI.trap.num * runif(1, min = trap.unit[1], max = trap.unit[2])) # at initial roll-out numbers
 
       # make up shortfall
-      if (shortfall.method == "H") {
-        makeup.iter <- shoot.ph * (shortfall / (cats.pph * eff.vec.iter)) # how many person-hours required to make up shortfall?
-      }
-      if (shortfall.method == "F") {
-        makeup.iter <- felixer.unit * (shortfall / (pfelixer.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
-      }
-      if (shortfall.method == "T") {
-        makeup.iter <- (runif(1, min = trap.unit[1], max = trap.unit[2])) * (shortfall / (ptrap.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
-      }
+      makeup.iter_hunt <- shoot.ph * (shortfall / (cats.pph * eff.vec.iter)) # how many person-hours required to make up shortfall?
+      makeup.iter_felixer <- felixer.unit * (shortfall / (pfelixer.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
+      makeup.iter_traps <- (runif(1, min = trap.unit[1], max = trap.unit[2])) * (shortfall / (ptrap.killr * eff.vec.iter)) # how many person-hours required to make up shortfall?
 
       totalcost.mat[e, ] <- base.cost + makeup.iter
 
