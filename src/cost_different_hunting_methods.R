@@ -38,7 +38,6 @@ for (m in 1:length(harv.prop.maint)) {
       simulator2$run_generations(interval_time, initial_population = initial_population)
 
 
-      init.k.sums.mat[e, ] <- as.vector(colSums(init.k.mat))
       k.sums.mat[e, ] <- as.vector(colSums(simulator2$k_mat))
       n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
 
@@ -46,9 +45,10 @@ for (m in 1:length(harv.prop.maint)) {
       eff.vec.iter <- a.eff / (1 + (b.eff * exp(-c.eff * n_sums_mat[simulation, ]))) # efficiency this iteration
 
       # calculate numbers killed per year using baiting and trapping first two years
-      dispatched_cats_base <-
-      bait.kill.base <- round(init.k.sums.mat[e, ] * (eff.vec.iter * pbait.killr), 0)
-      trap.kill.base <- round(k.sums.mat[e, ] * (eff.vec.iter * ptrap.killr), 0)
+      dispatched_cats_base <- as.vector(colSums(simulator2$k_mat[, 2:3]))
+      dispatched_cats_base <- c(0, dispatched_cats_base, rep(0,8))
+      bait.kill.base <- round(dispatched_cats_base * (eff.vec.iter * pbait.killr), 0)
+      trap.kill.base <- round(dispatched_cats_base * (eff.vec.iter * ptrap.killr), 0)
       bt.kill.base <- trap.kill.base + bait.kill.base
       shortfall <- k.sums.mat[e, ] - bt.kill.base # how many cats not being killed by these methods?
 
