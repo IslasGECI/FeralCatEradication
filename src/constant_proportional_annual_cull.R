@@ -36,7 +36,8 @@ for (s in 1:length(harv.prop.consist)) {
     survival <- Stochastic_Survival_Fertility$new(fertility, survival_probability)
     survival$set_standard_desviations(std_fertility, std_survival_probability)
     population <- Population$new(survival)
-    simulator2 <- Runner_Population_With_CC_harvest$new(population, coefficients, harv.prop.consist[s])
+    harv.prop <- Annualy_Harvest$new(harv.prop.consist[s])
+    simulator2 <- Runner_Population_With_CC_harvest$new(population, coefficients, harv.prop)
     simulator2$run_generations(interval_time, initial_population = initial_population)
     n_sums_mat[simulation, ] <- colSums(simulator2$n_mat) / initial_population
   }
