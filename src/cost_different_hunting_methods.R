@@ -1,3 +1,8 @@
+library(comprehenr)
+library("ggplot2")
+library("latex2exp")
+library(FeralCatEradication)
+source("R/feral_cat.R")
 source("src/parameters_of_fertility_and_survival.R")
 initial_population <- 1629
 source("src/data_of_cost.R")
