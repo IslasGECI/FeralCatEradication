@@ -81,7 +81,6 @@ for (m in 1:length(harv.prop.maint)) {
       totalcost.hunt[simulation, ] <- base.cost + makeup_hunt
       totalcost.felixer[simulation, ] <- base.cost + makeup_felixer
       totalcost.traps[simulation, ] <- base.cost + makeup_traps
-
     } # end e loop (stochastic iterations)
 
     min.ppop.vec <- apply(n_sums_mat, MARGIN = 1, min, na.rm = T)
