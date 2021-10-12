@@ -21,12 +21,21 @@ shortfall.method <- "T" # adding traps
 # shortfall.method <- "H" # increasing hunting pressure
 
 # harvest rate
-harv.prop.init <- seq(0.5, 0.9, 0.05)
-harv.prop.maint <- seq(0.1, 0.5, 0.05)
-q.ext <- 20
+harv.prop.init <- seq(0.5, 0.9, 0.10)
+harv.prop.maint <- seq(0.1, 0.5, 0.10)
+initial_population <- 1629
+capacity <- Carry_Capacity$new()
+coefficients <- capacity$coefficients_model(half_capacity = initial_population)
+yr_now <- 2020 # update if more data available post-2010
+yr_end <- 2030 # set projection end date
+interval_time <- Interval_Time$new(initial_year = yr_now, final_year = yr_end)
+number_year <- yr_end - yr_now + 1
 
 # storage
-qext.mat <- minn.med.mat <- minn.lo.mat <- minn.up.mat <- pmin.med.mat <- pmin.lo.mat <- pmin.up.mat <- totcost.med <- totcost.lo <- totcost.up <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
+pmin.med.mat <- pmin.lo.mat <- pmin.up.mat <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
+felixer_totcost.med <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
+traps_totcost.med <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
+hunt_totcost.med <- matrix(data = NA, ncol = length(harv.prop.maint), nrow = length(harv.prop.init))
 n_sums_mat <- matrix(data = 0, nrow = iter, ncol = number_year)
 totalcost.hunt <- matrix(data = 0, nrow = iter, ncol = number_year)
 totalcost.felixer <- matrix(data = 0, nrow = iter, ncol = number_year)
