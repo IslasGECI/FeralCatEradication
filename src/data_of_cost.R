@@ -73,3 +73,15 @@ cost.total.bait <- planecost + baitadminfee + (only.bait.unit * baitnum) # cost 
 pbait.killr <- 14 / 525.74 # 14 cats killed by 525.74 baits
 
 ###########################################################################################
+
+
+matriz2dataframe <- function(pmin.med.mat, harv.prop.init, harv.prop.main) {
+  twophase.up <- data.frame(pmin.med.mat)
+  colnames(twophase.up) <- harv.prop.maint
+  rownames(twophase.up) <- harv.prop.init
+  datos <- expand_grid(x = harv.prop.init, y = harv.prop.maint)
+  nx <- length(harv.prop.init)
+  ny <- length(harv.prop.maint)
+  datos$z <- to_vec(for (x in seq(1, nx)) for (y in seq(1, ny)) twophase.up[x, y])
+  return(datos)
+}
