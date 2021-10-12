@@ -86,14 +86,14 @@ for (m in 1:length(harv.prop.maint)) {
 
     min.ppop.vec <- apply(n_sums_mat, MARGIN = 1, min, na.rm = T)
     pmin.med.mat[n, m] <- median(min.ppop.vec, na.rm = T)
-    pmin.lo.mat[n, m] <- quantile(min.ppop.vec, probs = 0.025, na.rm = T)
-    pmin.up.mat[n, m] <- quantile(min.ppop.vec, probs = 0.975, na.rm = T)
 
     ## costs
+    totcost.vec <- apply(totalcost.felixer, MARGIN = 1, sum, na.rm = T)
+    felixer_totcost.med[n, m] <- median(totcost.vec, na.rm = T)
     totcost.vec <- apply(totalcost.hunt, MARGIN = 1, sum, na.rm = T)
-    totcost.med[n, m] <- median(totcost.vec, na.rm = T)
-    colnames(totcost.med) <- harv.prop.maint
-    rownames(totcost.med) <- harv.prop.init
+    hunt_totcost.med[n, m] <- median(totcost.vec, na.rm = T)
+    totcost.vec <- apply(totalcost.traps, MARGIN = 1, sum, na.rm = T)
+    traps_totcost.med[n, m] <- median(totcost.vec, na.rm = T)
 
     print("##############################")
     print(paste("init harvest proportion = ", harv.prop.init[n], sep = ""))
@@ -104,3 +104,11 @@ for (m in 1:length(harv.prop.maint)) {
   print(paste("maint harvest proportion = ", harv.prop.maint[m], sep = ""))
   print("##############################")
 } # end m loop (maintenance harvest rate)
+proportion_population <- matriz2dataframe(pmin.med.mat, harv.prop.init, harv.prop.maint)
+write_csv(proportion_population, "reports/tables/final_population_remaining_combinations_culling_scenarios.csv")
+cost_hunt <- matriz2dataframe(hunt_totcost.med, harv.prop.init, harv.prop.maint)
+write_csv(cost_hunt, "reports/tables/final_cost_hunt_combinations_culling_scenarios.csv")
+cost_traps <- matriz2dataframe(traps_totcost.med, harv.prop.init, harv.prop.maint)
+write_csv(cost_traps, "reports/tables/final_cost_traps_combinations_culling_scenarios.csv")
+cost_felixer <- matriz2dataframe(felixer_totcost.med, harv.prop.init, harv.prop.maint)
+write_csv(cost_felixer, "reports/tables/final_cost_felixer_combinations_culling_scenarios.csv")
