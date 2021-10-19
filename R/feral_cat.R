@@ -228,10 +228,10 @@ Abstract_Interval_Time <- R6::R6Class("Abstract_Interval_Time",
       private$final_year <- final_year
     },
     get_years = function() {
-      stop("Implement this method")
+      stop("This is an abstract method from the Abstract_Interval_Time class. Please implement this method.")
     },
     get_time_sequence = function() {
-      stop("Implement this method")
+      stop("This is an abstract method from the Abstract_Interval_Time class. Please implement this method.")
     }
   ),
   private = list(
@@ -312,9 +312,40 @@ Runner_Population_With_CC_harvest <- R6::R6Class("Runner_Population_With_CC_harv
       popmat <- matrix_leslie(self$population$survival$get_fertility(), modified_survival_probability)
       population_next_year <- popmat %*% n_mat
       ssd <- FeralCatEradication::stable_stage_dist(popmat)
-      population_next_year <- population_next_year - round(ssd * round(sum(population_next_year) * self$harvest, 0), 0)
+      population_next_year <- population_next_year - round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
       population_next_year[which(population_next_year < 0)] <- 0
       return(population_next_year)
     }
+  )
+)
+
+#' @export
+Annualy_Harvest <- R6::R6Class("Annualy_Harvest",
+  public = list(
+    proportion = NULL,
+    initialize = function(proportion) {
+      self$proportion <- proportion
+    },
+    get_harvest = function() {
+      return(self$proportion)
+    }
+  ),
+  private = list()
+)
+
+#' @export
+Many_Harvest <- R6::R6Class("Many_Harvest",
+  public = list(
+    proportion = NULL,
+    initialize = function(proportion) {
+      self$proportion <- proportion
+    },
+    get_harvest = function() {
+      private$year <- private$year + 1
+      return(self$proportion[private$year])
+    }
+  ),
+  private = list(
+    year = 0
   )
 )

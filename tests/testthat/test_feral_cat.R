@@ -2,8 +2,8 @@ library(testthat)
 
 
 describe("Get version of the module", {
-  it("The version is 0.2.1", {
-    expected_version <- c("0.2.1")
+  it("The version is 0.2.2", {
+    expected_version <- c("0.2.2")
     obtained_version <- packageVersion("FeralCatEradication")
     version_are_equal <- expected_version == obtained_version
     expect_true(version_are_equal)
@@ -246,5 +246,23 @@ describe("The class Monthly_Interval_Time", {
     expected_sequence_years <- seq(2020, 2032, 1 / 12)
     obtained_sequence_years <- interval_time$get_time_sequence()
     expect_equal(expected_sequence_years, obtained_sequence_years)
+  })
+})
+
+describe("Annualy_Harvest", {
+  it("Has the correct proportion", {
+    expected_harvest <- 0.35
+    harvest <- Annualy_Harvest$new(expected_harvest)
+    expect_equal(expected_harvest, harvest$get_harvest())
+  })
+})
+
+describe("Many_Harvest", {
+  it("Has the correct proportion", {
+    expected_harvests <- c(rep(0.35, 3), rep(0.65, 7))
+    harvest <- Many_Harvest$new(expected_harvests)
+    for (expected_harvest in expected_harvests) {
+      expect_equal(expected_harvest, harvest$get_harvest())
+    }
   })
 })
