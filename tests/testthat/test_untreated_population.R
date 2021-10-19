@@ -125,6 +125,7 @@ assess_are_equal <- function(survival, std_fertility, std_survival_probability) 
 }
 
 describe("The class Kathryn_Survival_Fertility", {
+  set.seed(4705)
   fertility <- rep(1, 20)
   survival_probability <- rep(0.46, 20)
   std_fertility <- rbeta(20, 1, 1)
