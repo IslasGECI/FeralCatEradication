@@ -37,7 +37,7 @@ reports/figures/simulation.jpg: reports/tables/simulation.csv src/plot_untreated
 		--input $< \
 		--output $@
 
-reports/figures/constant_proportional_annual_cull.jpg: src/constant_proportional_annual_cull.R
+reports/tables/constant_proportional_annual_cull.csv: src/constant_proportional_annual_cull.R
 	mkdir --parents $(@D)
 	Rscript src/constant_proportional_annual_cull.R
 
