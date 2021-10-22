@@ -27,11 +27,11 @@ reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
 	mkdir --parents $(@D)
 	Rscript src/plot_reduction_factor.R
 
-reports/tables/simulation.jpg: src/untreated_population.R
+reports/tables/simulation.csv: src/untreated_population.R
 	mkdir --parents $(@D)
 	Rscript src/untreated_population.R
 
-reports/figures/simulation.jpg: src/plot_untreated_population.py
+reports/figures/simulation.jpg: reports/tables/simulation.csv src/plot_untreated_population.py
 	mkdir --parents $(@D)
 	src/plot_untreated_population.py \
 		--input $< \
