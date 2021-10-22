@@ -18,12 +18,14 @@ data_path = path.input[0][0]
 plot_path = path.output[0][0]
 data_culling = pd.read_csv(data_path)
 
+
 def round_to_1(x):
     return round(x, -int(floor(log10(abs(x)))))
 
+
 sup_lim = max(data_culling.z)
 z_max = round_to_1(sup_lim)
-step = z_max/10
+step = z_max / 10
 
 x_grid, y_grid = np.meshgrid(data_culling.x.unique(), data_culling.y.unique())
 z_grid = np.reshape(data_culling.z.to_numpy(), x_grid.T.shape)
@@ -31,8 +33,8 @@ x_grid = x_grid.T
 y_grid = y_grid.T
 
 fig, ax = geci_plot()
-plt.contourf(x_grid, y_grid, z_grid, np.arange(0, z_max, step/10), alpha=0.8, extend='both')
-CS = ax.contour(x_grid, y_grid, z_grid, np.arange(0, z_max, step), colors='black')
+plt.contourf(x_grid, y_grid, z_grid, np.arange(0, z_max, step / 10), alpha=0.8, extend="both")
+CS = ax.contour(x_grid, y_grid, z_grid, np.arange(0, z_max, step), colors="black")
 ax.clabel(CS, CS.levels, inline=True, fontsize=10)
 plt.colorbar()
 plt.xlabel("Initial cull", size=20)

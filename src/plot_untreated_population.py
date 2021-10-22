@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# plot_untreated_population.py resultados gráficos del modelo de crecimiento 
+# plot_untreated_population.py resultados gráficos del modelo de crecimiento
 # poblacional de gatos sin cacería
 import numpy as np
 import pandas as pd
@@ -24,8 +24,8 @@ ax.fill_between(
     color="b",
 )
 ax.plot(data_population["yrs"], data_population["n_md"], color="b", label=r"Proportion $N_0$")
-ax.set_ylim(1,2.6)
-ax.set_xlim(2019.5,2030)
+ax.set_ylim(1, 2.6)
+ax.set_xlim(2019.5, 2030)
 ax.legend(loc="upper left", fontsize=15)
 ax.set_xlabel("Years", size=20)
 ax.set_ylabel(r"Proportional $N_0$", size=20)
