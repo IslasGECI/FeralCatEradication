@@ -36,4 +36,4 @@ n_up <- apply(n_sums_mat, MARGIN = 2, quantile, probs = 0.975, na.rm = T) # uppe
 n_lo <- apply(n_sums_mat, MARGIN = 2, quantile, probs = 0.025, na.rm = T) # lower over all iterations
 untreated <- data.frame(yrs, n_md, n_lo, n_up)
 
-write_csv(untreated, "reports/tables/simulation.jpg")
+write_csv(untreated, "reports/tables/simulation.csv")
