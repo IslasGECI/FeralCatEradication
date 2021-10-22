@@ -27,7 +27,7 @@ ax.plot(data_population["harv.prop.consist"], data_population["min.med.n"], colo
 ax.set_ylim(-0.01,1)
 ax.set_xlim(0.2,1)
 ax.legend(loc="upper left", fontsize=15)
-ax.set_xlabel("Years", size=20)
+ax.set_xlabel("Constant culling proportion", size=20)
 ax.set_ylabel(r"Proportional $N_0$", size=20)
 ax.tick_params(labelsize=15)
 plt.savefig(plot_path, dpi=300, transparent=True)
