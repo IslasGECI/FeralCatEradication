@@ -27,11 +27,17 @@ reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
 	mkdir --parents $(@D)
 	Rscript src/plot_reduction_factor.R
 
-reports/figures/simulation.jpg: src/untreated_population.R
+reports/tables/simulation.jpg: src/untreated_population.R
 	mkdir --parents $(@D)
 	Rscript src/untreated_population.R
 
-reports/tables/constant_proportional_annual_cull.csv: src/constant_proportional_annual_cull.R
+reports/figures/simulation.jpg: src/plot_untreated_population.py
+	mkdir --parents $(@D)
+	src/plot_untreated_population.py \
+		--input $< \
+		--output $@
+
+reports/figures/constant_proportional_annual_cull.jpg: src/constant_proportional_annual_cull.R
 	mkdir --parents $(@D)
 	Rscript src/constant_proportional_annual_cull.R
 
