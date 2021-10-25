@@ -14,8 +14,8 @@ endef
 
 reports/predicting_targets_and_costs.pdf: reports/predicting_targets_and_costs.tex \
 	reports/figures/reduction_factor.jpg \
-	reports/figures/simulation.jpg \
-	reports/figures/constant_proportional_annual_cull.jpg \
+	reports/figures/simulation.png \
+	reports/figures/constant_proportional_annual_cull.png \
 	reports/figures/monthly_time_serie_individuals.jpg \
 	reports/figures/culling_contour_plot.png \
 	reports/figures/cost_hunt_contour_plot.png \
