@@ -5,9 +5,7 @@
 import numpy as np
 import pandas as pd
 from geci_cli import geci_cli
-from geci_plots import geci_plot
-import matplotlib.pyplot as plt
-
+from geci_plots import geci_plot, plt
 path = geci_cli()
 
 data_path = path.input[0][0]
@@ -26,8 +24,8 @@ ax.fill_between(
 ax.plot(data_population["yrs"], data_population["n_md"], color="b", label=r"Proportion $N_0$")
 ax.set_ylim(1, 2.6)
 ax.set_xlim(2019.5, 2030)
-ax.legend(loc="upper left", fontsize=15)
+ax.legend(loc="upper left", fontsize=15, framealpha=0)
 ax.set_xlabel("Years", size=20)
 ax.set_ylabel(r"Proportional $N_0$", size=20)
 ax.tick_params(labelsize=15)
-plt.savefig(plot_path, dpi=300, transparent=True)
+fig.savefig(plot_path, dpi=300, transparent=True)

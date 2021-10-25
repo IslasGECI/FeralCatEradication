@@ -31,9 +31,9 @@ reports/tables/simulation.csv: src/untreated_population.R
 	mkdir --parents $(@D)
 	Rscript src/untreated_population.R
 
-reports/figures/simulation.jpg: reports/tables/simulation.csv src/plot_untreated_population.py
+reports/figures/simulation.png: reports/tables/simulation.csv src/plot_untreated_population.py
 	mkdir --parents $(@D)
-	src/plot_untreated_population.py \
+	python src/plot_untreated_population.py \
 		--input $< \
 		--output $@
 
@@ -41,7 +41,7 @@ reports/tables/constant_proportional_annual_cull.csv: src/constant_proportional_
 	mkdir --parents $(@D)
 	Rscript src/constant_proportional_annual_cull.R
 
-reports/figures/constant_proportional_annual_cull.jpg: reports/tables/constant_proportional_annual_cull.csv src/plot_constant_proportional_annual_cull.py
+reports/figures/constant_proportional_annual_cull.png: reports/tables/constant_proportional_annual_cull.csv src/plot_constant_proportional_annual_cull.py
 	mkdir --parents $(@D)
 	src/plot_constant_proportional_annual_cull.py \
 		--input $< \
