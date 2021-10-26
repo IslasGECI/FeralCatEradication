@@ -33,6 +33,8 @@ x_grid = x_grid.T
 y_grid = y_grid.T
 
 fig, ax = geci_plot()
+ax.spines["right"].set_visible(True)
+ax.spines["top"].set_visible(True)
 plt.contourf(x_grid, y_grid, z_grid, np.arange(0, z_max, step / 10), alpha=0.8, extend="both")
 CS = ax.contour(x_grid, y_grid, z_grid, np.arange(0, z_max, step), colors="black")
 ax.clabel(CS, CS.levels, inline=True, fontsize=10)
