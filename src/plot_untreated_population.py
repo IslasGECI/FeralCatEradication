@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from geci_cli import geci_cli
 from geci_plots import geci_plot, plt
+
 path = geci_cli()
 
 data_path = path.input[0][0]
