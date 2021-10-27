@@ -40,8 +40,8 @@ plt.contourf(x_grid, y_grid, z_grid, np.arange(0, z_max, step / 10), alpha=0.8, 
 CS = ax.contour(x_grid, y_grid, z_grid, np.arange(0, z_max, step), colors="black")
 ax.clabel(CS, CS.levels, inline=True, fontsize=10)
 plt.colorbar()
-plt.xlabel("Initial cull", size=20)
-plt.ylabel("Maintenance cull", size=20)
+plt.xlabel("Reducción Inicial", size=20)
+plt.ylabel("Reducción de Mantenimiento", size=20)
 if method != "Felixer":
     ax.set_yticks([])
     plt.ylabel("", size=20)

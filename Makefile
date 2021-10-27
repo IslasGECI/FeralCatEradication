@@ -65,7 +65,7 @@ reports/figures/cost_hunt_contour_plot.png: reports/tables/final_cost_hunt_combi
 	mkdir --parents $(@D)
 	src/plot_cost_contours.py \
 		--input $< \
-		--input Hunting \
+		--input Cacería \
 		--output $@
 
 reports/figures/cost_felixer_contour_plot.png: reports/tables/final_cost_felixer_combinations_culling_scenarios.csv src/plot_cost_contours.py
@@ -79,7 +79,7 @@ reports/figures/cost_traps_contour_plot.png: reports/tables/final_cost_traps_com
 	mkdir --parents $(@D)
 	src/plot_cost_contours.py \
 		--input $< \
-		--input Traps \
+		--input Trampeo \
 		--output $@
 
 .PHONY: \

@@ -37,5 +37,5 @@ ggplot(k_red_dat, aes(k_vec, red_vec)) +
     limits = range(marcasEjeY),
     breaks = marcasEjeY
   ) +
-  labs(x = "Number of individuals (cats)", y = "Reduction factor")
+  labs(x = "Numero de individuos (Gato)", y = "Factor de reducción")
 ggsave("reports/figures/reduction_factor.jpg")

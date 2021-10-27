@@ -19,14 +19,14 @@ ax.fill_between(
     data_population["n_lo"],
     data_population["n_up"],
     alpha=0.2,
-    label="Confidence zone",
+    label="Zona de confianza",
     color="b",
 )
-ax.plot(data_population["yrs"], data_population["n_md"], color="b", label=r"Proportion $N_0$")
+ax.plot(data_population["yrs"], data_population["n_md"], color="b", label=r"Proporción $N_0$")
 ax.set_ylim(1, 2.6)
 ax.set_xlim(2019.5, 2030)
 ax.legend(loc="upper left", fontsize=15, framealpha=0)
-ax.set_xlabel("Years", size=20)
-ax.set_ylabel(r"Proportional $N_0$", size=20)
+ax.set_xlabel("Años", size=20)
+ax.set_ylabel(r"Proporcional $N_0$", size=20)
 ax.tick_params(labelsize=15)
 fig.savefig(plot_path, dpi=300, transparent=True)

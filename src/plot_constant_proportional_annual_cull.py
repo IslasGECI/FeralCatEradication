@@ -20,19 +20,19 @@ ax.fill_between(
     data_population["min.lo.n"],
     data_population["min.up.n"],
     alpha=0.2,
-    label="Confidence zone",
+    label="Zona de confianza",
     color="b",
 )
 ax.plot(
     data_population["harv.prop.consist"],
     data_population["min.med.n"],
     color="b",
-    label=r"Proportion $N_0$",
+    label=r"Proporcion $N_0$",
 )
 ax.set_ylim(-0.01, 1)
 ax.set_xlim(0.2, 1)
 ax.legend(loc="upper left", fontsize=15)
-ax.set_xlabel("Constant culling proportion", size=20)
-ax.set_ylabel(r"Proportional $N_0$", size=20)
+ax.set_xlabel("Proporción constante de reducción", size=20)
+ax.set_ylabel(r"Proporcional $N_0$", size=20)
 ax.tick_params(labelsize=15)
 fig.savefig(plot_path, dpi=300, transparent=True)
