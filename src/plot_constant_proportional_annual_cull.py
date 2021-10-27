@@ -27,7 +27,7 @@ ax.plot(
     data_population["harv.prop.consist"],
     data_population["min.med.n"],
     color="b",
-    label=r"Proporcion $N_0$",
+    label=r"Proporción $N_0$",
 )
 ax.set_ylim(-0.01, 1)
 ax.set_xlim(0.2, 1)
