@@ -42,7 +42,17 @@ ax.clabel(CS, CS.levels, inline=True, fontsize=10)
 plt.colorbar()
 plt.xlabel("Initial cull", size=20)
 plt.ylabel("Maintenance cull", size=20)
-text_kwargs = dict(ha='center', va='center', fontsize=28, color='C1')
-plt.text(0.5, 0.5, method, **text_kwargs)
+if method != "Felixer":
+    ax.set_yticks([])
+    plt.ylabel("", size=20)
+    plt.tick_params(
+        axis='y',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        left=False,      # ticks along the bottom edge are off
+        right=False,         # ticks along the top edge are off
+        labelbottom=False
+    )
+text_kwargs = dict(ha='center', va='center', fontsize=28, color='C1', transform=ax.transAxes)
+plt.text(0.5, 0.4, method, **text_kwargs)
 ax.tick_params(labelsize=15)
 plt.savefig(plot_path, dpi=300, transparent=True)
