@@ -43,7 +43,7 @@ reports/tables/constant_proportional_annual_cull.csv: src/constant_proportional_
 
 reports/figures/constant_proportional_annual_cull.png: reports/tables/constant_proportional_annual_cull.csv src/plot_constant_proportional_annual_cull.py
 	mkdir --parents $(@D)
-	src/plot_constant_proportional_annual_cull.py \
+	python src/plot_constant_proportional_annual_cull.py \
 		--input $< \
 		--output $@
 
