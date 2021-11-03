@@ -200,6 +200,19 @@ describe("The class Plotter_Population", {
 })
 
 describe("The class Interval_Time", {
+  it("The abstract methods gives information.", {
+    interval_time <- Abstract_Interval_Time$new(initial_year = 2020, final_year = 2030)
+    expected_message <- "This is an abstract method from the Abstract_Interval_Time class. Please implement this method."
+    tryCatch(
+      {
+        try(obtained_years <- interval_time$get_years())
+        try(obtained_time_sequence <- interval_time$get_time_sequence())
+      },
+      error = function(error) {
+        expect_equal(expected_message, error[1])
+      }
+    )
+  })
   it("The method get_years works right", {
     interval_time <- Interval_Time$new(initial_year = 2020, final_year = 2030)
     expected_years <- 10
