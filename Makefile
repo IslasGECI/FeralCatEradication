@@ -53,7 +53,7 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 
 reports/figures/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
-	src/plot_culling_contours.py \
+	python src/plot_culling_contours.py \
 		--input $< \
 		--output $@
 
@@ -63,21 +63,21 @@ reports/tables/final_population_remaining_combinations_culling_scenarios.csv: sr
 
 reports/figures/cost_hunt_contour_plot.png: reports/tables/final_cost_hunt_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
 		--input Cacería \
 		--output $@
 
 reports/figures/cost_felixer_contour_plot.png: reports/tables/final_cost_felixer_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
 		--input Felixer \
 		--output $@
 
 reports/figures/cost_traps_contour_plot.png: reports/tables/final_cost_traps_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
 		--input Trampeo \
 		--output $@
