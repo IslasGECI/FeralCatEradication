@@ -202,7 +202,7 @@ describe("The class Plotter_Population", {
 describe("The class Interval_Time", {
   it("The abstract methods gives information.", {
     interval_time <- Abstract_Interval_Time$new(initial_year = 2020, final_year = 2030)
-    expected_message <- "Thix is an abstract method from the Abstract_Interval_Time class. Please implement this method."
+    expected_message <- "This is an abstract method from the Abstract_Interval_Time class. Please implement this method."
     error <- try(obtained_years <- interval_time$get_years())
     obtained_message <- attr(error, "condition")[1]$message
     expect_equal(expected_message, obtained_message)
