@@ -2,8 +2,8 @@ library(testthat)
 
 
 describe("Get version of the module", {
-  it("The version is 0.2.2", {
-    expected_version <- c("0.2.2")
+  it("The version is 0.3.0", {
+    expected_version <- c("0.3.0")
     obtained_version <- packageVersion("FeralCatEradication")
     version_are_equal <- expected_version == obtained_version
     expect_true(version_are_equal)
@@ -200,6 +200,13 @@ describe("The class Plotter_Population", {
 })
 
 describe("The class Interval_Time", {
+  it("The abstract methods gives information.", {
+    interval_time <- Abstract_Interval_Time$new(initial_year = 2020, final_year = 2030)
+    expected_message <- "This is an abstract method from the Abstract_Interval_Time class. Please implement this method."
+    error <- try(obtained_years <- interval_time$get_years())
+    obtained_message <- attr(error, "condition")[1]$message
+    expect_equal(expected_message, obtained_message)
+  })
   it("The method get_years works right", {
     interval_time <- Interval_Time$new(initial_year = 2020, final_year = 2030)
     expected_years <- 10
