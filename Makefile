@@ -17,7 +17,10 @@ reports/predicting_targets_and_costs.pdf: reports/predicting_targets_and_costs.t
 	reports/figures/simulation.jpg \
 	reports/figures/constant_proportional_annual_cull.jpg \
 	reports/figures/monthly_time_serie_individuals.jpg \
-	reports/figures/culling_contour_plot.png
+	reports/figures/culling_contour_plot.png \
+	reports/figures/cost_hunt_contour_plot.png \
+	reports/figures/cost_felixer_contour_plot.png \
+	reports/figures/cost_traps_contour_plot.png
 	$(renderLatexBibtexAndPythontex)
 
 reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
@@ -36,13 +39,31 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
 	Rscript src/presentacion_210820.R
 
-reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/calculate_high_harvest_two_year.R
-	mkdir --parents $(@D)
-	Rscript src/calculate_high_harvest_two_year.R
-
 reports/figures/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
 	src/plot_culling_contours.py \
+		--input $< \
+		--output $@
+
+reports/tables/final_population_remaining_combinations_culling_scenarios.csv: src/cost_different_hunting_methods.R
+	mkdir --parents $(@D)
+	Rscript src/cost_different_hunting_methods.R
+
+reports/figures/cost_hunt_contour_plot.png: reports/tables/final_cost_hunt_combinations_culling_scenarios.csv src/plot_cost_contours.py
+	mkdir --parents $(@D)
+	src/plot_cost_contours.py \
+		--input $< \
+		--output $@
+
+reports/figures/cost_felixer_contour_plot.png: reports/tables/final_cost_felixer_combinations_culling_scenarios.csv src/plot_cost_contours.py
+	mkdir --parents $(@D)
+	src/plot_cost_contours.py \
+		--input $< \
+		--output $@
+
+reports/figures/cost_traps_contour_plot.png: reports/tables/final_cost_traps_combinations_culling_scenarios.csv src/plot_cost_contours.py
+	mkdir --parents $(@D)
+	src/plot_cost_contours.py \
 		--input $< \
 		--output $@
 
@@ -104,8 +125,8 @@ results: src/FeralCatEradication.R
 setup:
 	R -e "devtools::document()" && \
 	R CMD build . && \
-	R CMD check FeralCatEradication_0.2.2.tar.gz && \
-	R CMD INSTALL FeralCatEradication_0.2.2.tar.gz
+	R CMD check FeralCatEradication_0.3.0.tar.gz && \
+	R CMD INSTALL FeralCatEradication_0.3.0.tar.gz
 	
 tests:
 	R -e "devtools::test()"

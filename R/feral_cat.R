@@ -123,7 +123,8 @@ Runner_Population <- R6::R6Class("Runner_Population",
     run_generations = function(interval_time, initial_population) {
       n_mat <- private$setup_variables(interval_time, initial_population)
       for (year in 1:private$years) {
-        n_mat[, year + 1] <- private$run_a_year(n_mat[, year])
+        year_eradication <- private$run_a_year(n_mat[, year])
+        n_mat[, year + 1] <- year_eradication$population
       }
       self$n_mat <- n_mat
     }
@@ -151,7 +152,8 @@ Runner_Population <- R6::R6Class("Runner_Population",
     run_a_year = function(n_mat) {
       popmat <- matrix_leslie(self$population$survival$get_fertility(), self$population$survival$get_survival())
       population_next_year <- popmat %*% n_mat
-      return(population_next_year)
+      year_eradication <- list(population = population_next_year)
+      return(year_eradication)
     }
   )
 )
@@ -288,7 +290,8 @@ Runner_Population_With_CC <- R6::R6Class("Runner_Population_With_CC",
       modified_survival_probability <- modifier_survival_probability(tot_n_i, self$coefficients, self$population$survival$get_survival())
       popmat <- matrix_leslie(self$population$survival$get_fertility(), modified_survival_probability)
       population_next_year <- popmat %*% n_mat
-      return(population_next_year)
+      year_eradication <- list(population = population_next_year)
+      return(year_eradication)
     }
   )
 )
@@ -299,10 +302,22 @@ Runner_Population_With_CC_harvest <- R6::R6Class("Runner_Population_With_CC_harv
   public = list(
     coefficients = NULL,
     harvest = NULL,
+    k_mat = NULL,
     initialize = function(population, coefficients, harvest) {
       self$population <- population
       self$coefficients <- coefficients
       self$harvest <- harvest
+    },
+    run_generations = function(interval_time, initial_population) {
+      n_mat <- private$setup_variables(interval_time, initial_population)
+      k_mat <- private$set_k_mat()
+      for (year in 1:private$years) {
+        year_eradication <- private$run_a_year(n_mat[, year])
+        n_mat[, year + 1] <- year_eradication$population
+        k_mat[, year + 1] <- year_eradication$cats
+      }
+      self$n_mat <- n_mat
+      self$k_mat <- k_mat
     }
   ),
   private = list(
@@ -312,9 +327,15 @@ Runner_Population_With_CC_harvest <- R6::R6Class("Runner_Population_With_CC_harv
       popmat <- matrix_leslie(self$population$survival$get_fertility(), modified_survival_probability)
       population_next_year <- popmat %*% n_mat
       ssd <- FeralCatEradication::stable_stage_dist(popmat)
-      population_next_year <- population_next_year - round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
+      hunted_cats <- round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
+      population_next_year <- population_next_year - hunted_cats
       population_next_year[which(population_next_year < 0)] <- 0
-      return(population_next_year)
+      year_eradication <- list(population = population_next_year, cats = hunted_cats)
+      return(year_eradication)
+    },
+    set_k_mat = function() {
+      age_max <- length(self$population$survival$get_fertility())
+      k_mat <- matrix(0, nrow = age_max, ncol = (private$years + 1))
     }
   )
 )
