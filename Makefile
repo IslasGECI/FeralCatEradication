@@ -14,8 +14,8 @@ endef
 
 reports/predicting_targets_and_costs.pdf: reports/predicting_targets_and_costs.tex \
 	reports/figures/reduction_factor.jpg \
-	reports/figures/simulation.jpg \
-	reports/figures/constant_proportional_annual_cull.jpg \
+	reports/figures/simulation.png \
+	reports/figures/constant_proportional_annual_cull.png \
 	reports/figures/monthly_time_serie_individuals.jpg \
 	reports/figures/culling_contour_plot.png \
 	reports/figures/cost_hunt_contour_plot.png \
@@ -27,13 +27,25 @@ reports/figures/reduction_factor.jpg: src/plot_reduction_factor.R
 	mkdir --parents $(@D)
 	Rscript src/plot_reduction_factor.R
 
-reports/figures/simulation.jpg: src/untreated_population.R
+reports/tables/simulation.csv: src/untreated_population.R
 	mkdir --parents $(@D)
 	Rscript src/untreated_population.R
 
-reports/figures/constant_proportional_annual_cull.jpg: src/constant_proportional_annual_cull.R
+reports/figures/simulation.png: reports/tables/simulation.csv src/plot_untreated_population.py
+	mkdir --parents $(@D)
+	python src/plot_untreated_population.py \
+		--input $< \
+		--output $@
+
+reports/tables/constant_proportional_annual_cull.csv: src/constant_proportional_annual_cull.R
 	mkdir --parents $(@D)
 	Rscript src/constant_proportional_annual_cull.R
+
+reports/figures/constant_proportional_annual_cull.png: reports/tables/constant_proportional_annual_cull.csv src/plot_constant_proportional_annual_cull.py
+	mkdir --parents $(@D)
+	python src/plot_constant_proportional_annual_cull.py \
+		--input $< \
+		--output $@
 
 reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 	mkdir --parents $(@D)
@@ -41,7 +53,7 @@ reports/figures/monthly_time_serie_individuals.jpg: src/presentacion_210820.R
 
 reports/figures/culling_contour_plot.png: reports/tables/final_population_remaining_combinations_culling_scenarios.csv src/plot_culling_contours.py
 	mkdir --parents $(@D)
-	src/plot_culling_contours.py \
+	python src/plot_culling_contours.py \
 		--input $< \
 		--output $@
 
@@ -51,20 +63,23 @@ reports/tables/final_population_remaining_combinations_culling_scenarios.csv: sr
 
 reports/figures/cost_hunt_contour_plot.png: reports/tables/final_cost_hunt_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
+		--input Cacería \
 		--output $@
 
 reports/figures/cost_felixer_contour_plot.png: reports/tables/final_cost_felixer_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
+		--input Felixer \
 		--output $@
 
 reports/figures/cost_traps_contour_plot.png: reports/tables/final_cost_traps_combinations_culling_scenarios.csv src/plot_cost_contours.py
 	mkdir --parents $(@D)
-	src/plot_cost_contours.py \
+	python src/plot_cost_contours.py \
 		--input $< \
+		--input Trampeo \
 		--output $@
 
 .PHONY: \
