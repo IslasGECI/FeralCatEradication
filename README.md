@@ -12,13 +12,7 @@ Frédérik Saltré.
 > for feral-cat reduction on large islands using stochastic population models. Conservation Science
 > and Practice. DOI: [10.1111/csp2.448](https://doi.org/10.1111/csp2.448)
 
-# Notes:
-
-- No external data files are needed
-- Requires library _Plotly_
-- Run `matrixOperators.r` before `FeralCatEradication.R`
-- Run `FeralCatEradication.R` L9-136, before `Supplementary.R`
-
+---
 
 ```shell
 docker build . --tag feral_cat
