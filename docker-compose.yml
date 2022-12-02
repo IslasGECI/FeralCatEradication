@@ -1,0 +1,14 @@
+version: "3.1"
+services:
+  islasgeci:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: islasgeci/feralcateradication:latest
+    command: bash
+    environment:
+      BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+      BITBUCKET_PASSWORD: $BITBUCKET_PASSWORD
+    volumes:
+      - $PWD:/workdir
+
