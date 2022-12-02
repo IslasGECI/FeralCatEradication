@@ -1,5 +1,4 @@
 library(FeralCatEradication)
-source("R/untreated_population.R")
 
 fertility <- c((0.745 / 3), 0.745, 2.52, 2.52, 2.52, 2.52, 1.98)
 survival_probability <- c(0.46, 0.46, 0.7, 0.7, 0.7, 0.7)
