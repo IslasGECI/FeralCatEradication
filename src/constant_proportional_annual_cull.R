@@ -30,7 +30,6 @@ number_year <- yr_end - yr_now + 1
 n_sums_mat <- matrix(data = 0, nrow = iter, ncol = number_year)
 
 for (s in 1:length(harv.prop.consist)) {
-
   # set storage matrices & vectors
   for (simulation in seq(1, iter)) {
     survival <- Stochastic_Survival_Fertility$new(fertility, survival_probability)

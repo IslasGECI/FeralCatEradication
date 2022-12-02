@@ -37,7 +37,6 @@ minn.med.mat <- minn.lo.mat <- minn.up.mat <- pmin.med.mat <- pmin.lo.mat <- pmi
 
 for (m in 1:length(harv.prop.maint)) {
   for (n in 1:length(harv.prop.init)) {
-
     # storage
     harvest <- c(rep(harv.prop.init[n], 2), rep(harv.prop.maint[m], 9))
 
