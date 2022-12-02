@@ -1,5 +1,4 @@
 library(FeralCatEradication)
-source("R/monthly_matrix_leslie.R")
 source("R/untreated_population.R")
 
 fertility <- c((0.745 / 3), 0.745, 2.52, 2.52, 2.52, 2.52, 1.98)

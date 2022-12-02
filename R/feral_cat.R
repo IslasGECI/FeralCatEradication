@@ -1,4 +1,6 @@
 library(tidyverse)
+#' @import ggplot2
+
 #' @export
 max_lambda <- function(x) {
   Re((eigen(x)$values)[1])
@@ -184,7 +186,7 @@ Plotter_Population <- R6::R6Class("Plotter_Population",
     plot_population = NULL,
     setup_variables = function(population) {
       n_pred <- colSums(population$n_mat)
-      individuals <- tibble(yrs = as.character(population$sequence_years), n_pred)
+      individuals <- tibble::tibble(yrs = as.character(population$sequence_years), n_pred)
       return(individuals)
     },
     setup_y_ticks = function(individuals) {
