@@ -1,3 +1,5 @@
+<img src="https://www.islas.org.mx/img/logo.svg" align="right" width="256" />
+
 # FeralCatEradication
 
 **Stochastic models for predicting feral cat eradication and costs on large islands.**
