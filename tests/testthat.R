@@ -1,4 +1,4 @@
 library(testthat)
-library(FeralCatEradication)
+library(popdyn)
 
-test_check("FeralCatEradication")
+test_check("popdyn")

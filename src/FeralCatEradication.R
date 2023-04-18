@@ -5,7 +5,7 @@
 
 # libraries
 library(plotly)
-library(FeralCatEradication)
+library(popdyn)
 source("R/feral_cat.R")
 options(scipen = 1000)
 library(tidyverse)

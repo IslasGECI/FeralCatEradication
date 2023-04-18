@@ -85,7 +85,7 @@ survival_modifier <- function(tot_n_i, coefficients) {
 
 #' @export
 modifier_survival_probability <- function(tot_n_i, coefficients, survival_probability) {
-  pred_red <- FeralCatEradication::survival_modifier(tot_n_i, coefficients)
+  pred_red <- popdyn::survival_modifier(tot_n_i, coefficients)
   modified_survival_probability <- survival_probability * pred_red
   return(modified_survival_probability)
 }
@@ -146,7 +146,7 @@ Runner_Population <- R6::R6Class("Runner_Population",
       age_max <- length(self$population$survival$get_fertility())
       n_mat <- matrix(0, nrow = age_max, ncol = (private$years + 1))
       popmat <- matrix_leslie(self$population$survival$get_fertility(), self$population$survival$get_survival())
-      ssd <- FeralCatEradication::stable_stage_dist(popmat)
+      ssd <- popdyn::stable_stage_dist(popmat)
       classes_age_population <- ssd * initial_population
       n_mat[, 1] <- classes_age_population
       return(n_mat)
@@ -328,7 +328,7 @@ Runner_Population_With_CC_harvest <- R6::R6Class("Runner_Population_With_CC_harv
       modified_survival_probability <- modifier_survival_probability(tot_n_i, self$coefficients, self$population$survival$get_survival())
       popmat <- matrix_leslie(self$population$survival$get_fertility(), modified_survival_probability)
       population_next_year <- popmat %*% n_mat
-      ssd <- FeralCatEradication::stable_stage_dist(popmat)
+      ssd <- popdyn::stable_stage_dist(popmat)
       hunted_cats <- round(ssd * round(sum(population_next_year) * self$harvest$get_harvest(), 0), 0)
       population_next_year <- population_next_year - hunted_cats
       population_next_year[which(population_next_year < 0)] <- 0

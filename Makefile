@@ -109,10 +109,10 @@ check:
 
 clean:
 	cd reports && ls | egrep --invert-match "*.tex|*.md|*.bib" | xargs --delimiter="\n" rm --force --recursive
-	rm --force --recursive FeralCatEradication.Rcheck
+	rm --force --recursive popdyn.Rcheck
 	rm --force --recursive reports/figures
 	rm --force --recursive tests/testthat/_snaps
-	rm --force FeralCatEradication_*.tar.gz
+	rm --force popdyn_*.tar.gz
 	rm --force --recursive reports/pythontex-files-predicting_targets_and_costs
 	rm --force NAMESPACE
 	rm --force Rplots.pdf
@@ -126,6 +126,8 @@ format:
 	  -e "style_dir('src')" \
 	  -e "style_dir('tests')"
 
+init: setup tests
+
 linter:
 	$(lint)
 	if $(lint) | grep -e "\^" ; then exit 1 ; else exit 0 ; fi
@@ -137,11 +139,11 @@ results: src/FeralCatEradication.R
 	mkdir reports/figures/ --parents
 	Rscript src/FeralCatEradication.R
 
-setup:
+setup: clean
 	R -e "devtools::document()" && \
 	R CMD build . && \
-	R CMD check FeralCatEradication_0.3.0.tar.gz && \
-	R CMD INSTALL FeralCatEradication_0.3.0.tar.gz
+	R CMD check popdyn_0.3.0.tar.gz && \
+	R CMD INSTALL popdyn_0.3.0.tar.gz
 	
 tests:
 	R -e "devtools::test()"

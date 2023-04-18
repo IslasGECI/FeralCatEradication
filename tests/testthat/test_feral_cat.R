@@ -4,7 +4,7 @@ library(testthat)
 describe("Get version of the module", {
   it("The version is 0.3.0", {
     expected_version <- c("0.3.0")
-    obtained_version <- packageVersion("FeralCatEradication")
+    obtained_version <- packageVersion("popdyn")
     version_are_equal <- expected_version == obtained_version
     expect_true(version_are_equal)
   })
