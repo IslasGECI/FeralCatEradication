@@ -16,5 +16,11 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@main
         with:
-          name: paper
+          name: report
           path: reports/predicting_targets_and_costs.pdf
+      - name: Upload figures
+        uses: actions/upload-artifact@main
+        with:
+          name: figures
+          path: reports/figures/*
+
